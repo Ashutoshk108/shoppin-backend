@@ -18,15 +18,9 @@ app = FastAPI(
 async def extract_product_urls(crawl_request: CrawlRequest):
     try:
         domains = [str(domain).replace("http://", "").replace("https://", "").rstrip('/') for domain in crawl_request.domains]
-        
         if not domains:
             raise HTTPException(status_code=400, detail="No domains provided.")
-        
         crawl_result = await crawl_domains(domains)
-        
-        # Ensure output directory exists
-        import os
-        os.makedirs('output', exist_ok=True)
         
         with open('output/product_urls.json', 'w') as f:
             json.dump(crawl_result, f, indent=4)
