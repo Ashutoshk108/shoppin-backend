@@ -1,4 +1,10 @@
 #!/bin/bash
+set -e
+
+# Upgrade pip
+python -m pip install --upgrade pip
+
+#!/bin/bash
 # Update package lists
 sudo apt-get update
 pip install uvicorn
@@ -13,8 +19,13 @@ sudo apt-get install -y \
     libmanette-0.2-0 \
     libgles2
 
-# Install Python dependencies
-pip install -r requirements.txt
-
 # Install Playwright browsers
+playwright install
+
+
+# Install dependencies
+python -m pip install -r requirements.txt --no-cache-dir
+
+# Install Playwright system dependencies and browsers
+playwright install-deps
 playwright install
