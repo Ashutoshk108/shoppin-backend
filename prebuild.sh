@@ -1,17 +1,11 @@
 #!/bin/bash
 set -e
 
-# Upgrade pip
-python -m pip install --upgrade pip
-
-#!/bin/bash
-# Update package lists
-sudo apt-get update
-pip install uvicorn
-
-# Install missing Playwright dependencies
-sudo apt-get install -y \
+# Update and install system dependencies without sudo
+apt-get update
+apt-get install -y \
     libgstreamer-gl1.0-0 \
+    libgstreamer1.0-0 \
     libgstreamer-plugins-base1.0-0 \
     libavif15 \
     libenchant-2-2 \
@@ -19,13 +13,13 @@ sudo apt-get install -y \
     libmanette-0.2-0 \
     libgles2
 
-# Install Playwright browsers
-playwright install
-
+# Upgrade pip
+python -m pip install --upgrade pip
 
 # Install dependencies
 python -m pip install -r requirements.txt --no-cache-dir
 
-# Install Playwright system dependencies and browsers
+# Install Playwright
+python -m pip install playwright
 playwright install-deps
 playwright install
